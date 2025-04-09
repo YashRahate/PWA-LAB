@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Netflix India – Watch TV Shows Online, Watch Movies Online</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json">
   </head>
   <body>
     <div class="main">
@@ -180,5 +181,36 @@
         </div>
       </footer>
     </div>
+    
+    <script>
+      if ('serviceWorker' in navigator && 'SyncManager' in window) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('serviceworker.js')
+            .then(reg => {
+              console.log("✅ Service Worker registered:", reg.scope);
+    
+              // Optional: Register a sync event
+              reg.sync.register('sync-tag').then(() => {
+                console.log('🔁 Sync registered');
+              }).catch(err => {
+                console.warn('❌ Sync registration failed:', err);
+              });
+    
+            }).catch(err => {
+              console.error("❌ Service Worker registration failed:", err);
+            });
+        });
+    
+        // Request notification permission
+        Notification.requestPermission().then(permission => {
+          if (permission === "granted") {
+            console.log("🔔 Notifications allowed");
+          }
+        });
+    
+      } else {
+        console.warn("⚠️ Service Worker or Background Sync not supported.");
+      }
+    </script>     
   </body>
 </html>
