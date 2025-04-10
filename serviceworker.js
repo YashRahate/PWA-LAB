@@ -51,6 +51,6 @@ self.addEventListener("push", (event) => {
     badge: "icons/icon-192x192.png"
   };
   event.waitUntil(
-    self.registration.showNotification("🔥 Push Notification", options)
+    self.registration.showNotification("🔥 Push Notification, Welcome the Yash Rahate Netflix ", options)
   );
 });
